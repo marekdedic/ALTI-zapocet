@@ -1,4 +1,4 @@
-name = "ALTI-zapocet"
+name = "GroebnerBasis"
 uuid = "83cee072-edc6-4844-a8e5-3fe0ae3b00ff"
 author = ["Marek Dědič <developer@dedic.eu>"]
 version = "0.1.0"
