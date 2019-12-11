@@ -33,8 +33,8 @@ function base_ring(a::Ideal)::AbstractAlgebra.Ring
 	return a.base_ring;
 end
 
-function gens(a::Ideal)::Set{AbstractAlgebra.RingElem}
-	return a.generators;
+function gens(a::Ideal)::Vector{AbstractAlgebra.RingElem}
+	return collect(a.generators);
 end
 
 function show(io::IO, a::Ideal)
