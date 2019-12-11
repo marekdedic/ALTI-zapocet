@@ -1,6 +1,6 @@
 using AbstractAlgebra;
 
-import Base.show;
+import Base: show, zero;
 import AbstractAlgebra: base_ring, gens;
 
 export Ideal, base_ring, gens, show;
@@ -35,6 +35,10 @@ end
 
 function gens(a::Ideal{T})::Set{T} where {T<:AbstractAlgebra.RingElem}
 	return a.generators;
+end
+
+function zero(a::Ideal{T})::T where {T<:AbstractAlgebra.RingElem}
+	return zero(base_ring(a));
 end
 
 function show(io::IO, a::Ideal)
