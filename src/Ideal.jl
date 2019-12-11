@@ -22,7 +22,7 @@ mutable struct Ideal{T<:AbstractAlgebra.RingElem}<:IdealType
 end
 
 function Ideal(base_ring::AbstractAlgebra.Ring, generators::Vector{T})::Ideal where {T<:AbstractAlgebra.RingElem}
-	return Ideal(base_ring, Set(generator));
+	return Ideal(base_ring, Set(generators));
 end
 
 function Ideal(base_ring::AbstractAlgebra.Ring, generator::T)::Ideal where {T<:AbstractAlgebra.RingElem}
@@ -33,8 +33,8 @@ function base_ring(a::Ideal)::AbstractAlgebra.Ring
 	return a.base_ring;
 end
 
-function gens(a::Ideal)::Vector{AbstractAlgebra.RingElem}
-	return collect(a.generators);
+function gens(a::Ideal{T})::Set{T} where {T<:AbstractAlgebra.RingElem}
+	return a.generators;
 end
 
 function show(io::IO, a::Ideal)
