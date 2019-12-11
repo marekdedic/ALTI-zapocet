@@ -3,7 +3,7 @@ module GroebnerBasis
 include("Ideal.jl");
 
 include("buchberger.jl");
-include("reduce.jl");
+include("reducePoly.jl");
 include("SPolynomial.jl");
 
 end
