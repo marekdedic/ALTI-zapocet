@@ -24,8 +24,8 @@ end
 function reducePoly(source::T, top::Set{T})::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
 	for t in top
 		ret = reducePoly(source, t);
-		if !isnothing(t)
-			return t;
+		if !isnothing(ret)
+			return ret;
 		end
 	end
 	return nothing;
