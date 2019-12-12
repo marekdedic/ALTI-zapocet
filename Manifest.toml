@@ -2,7 +2,7 @@
 
 [[AbstractAlgebra]]
 deps = ["InteractiveUtils", "LinearAlgebra", "Markdown", "Random", "SparseArrays", "Test"]
-git-tree-sha1 = "da0bf98d73f2f34c35d58981fcf139f16749a394"
+path = "/home/marek995/.julia/dev/AbstractAlgebra"
 uuid = "c3fe647b-3220-5bb0-a1ea-a7954cac585d"
 version = "0.7.1"
 
