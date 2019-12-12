@@ -37,6 +37,9 @@ function reducePolyStar(source::T, top::Set{T})::T where {T<:AbstractAlgebra.MPo
 		if reduced in encountered
 			error("The reducing graph is not terminating");
 		end
+		if length(encountered)>100
+			error("The reducing graph is not terminating");
+		end
 		if isnothing(reduced)
 			return source;
 		end
