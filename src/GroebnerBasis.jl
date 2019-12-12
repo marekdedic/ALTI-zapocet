@@ -1,7 +1,5 @@
 module GroebnerBasis
 
-include("CC.jl");
-
 include("Ideal.jl");
 
 include("buchberger.jl");
