@@ -2,29 +2,14 @@ using AbstractAlgebra
 
 export reducePoly, reducePolyStar;
 
-function monomial(term::T)::T where {T<:AbstractAlgebra.MPolyElem}
-	return collect(monomials(term))[1];
+function reducePoly(source::T, top::T)::T where {T<:AbstractAlgebra.MPolyElem}
+	return divrem(source, top)[2];
 end
 
-function reducePoly(source::T, top::T)::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
-	for term in terms(source)
-		if !divides(term, lm(top))[1]
-			continue;
-		end
-		termMonomial = monomial(term);
-		termChecks = map(t -> monomial(t) == termMonomial, terms(source - term));
-		if !isempty(termChecks) && maximum(termChecks);
-			continue;
-		end
-		return source - divexact(term, lm(top)) * top;
-	end
-	return nothing;
-end
-
-function reducePoly(source::T, top::Set{T})::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
+function reducePoly(source::T, top::Set{T}, encountered::Set{T})::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
 	for t in top
 		ret = reducePoly(source, t);
-		if !isnothing(ret)
+		if !isnothing(ret) && ret ∉ collect(encountered)
 			return ret;
 		end
 	end
@@ -33,10 +18,7 @@ end
 
 function reducePolyStar(source::T, top::Set{T})::T where {T<:AbstractAlgebra.MPolyElem}
 	function terminatingCheck(source::T, top::Set{T}, encountered::Set{T})::T
-		reduced = reducePoly(source, top);
-		if reduced in encountered
-			error("The reducing graph is not terminating");
-		end
+		reduced = reducePoly(source, top, encountered);
 		if length(encountered)>100
 			error("The reducing graph is not terminating");
 		end
@@ -46,5 +28,5 @@ function reducePolyStar(source::T, top::Set{T})::T where {T<:AbstractAlgebra.MPo
 		push!(encountered, reduced);
 		return terminatingCheck(reduced, top, encountered);
 	end
-	return terminatingCheck(source, top, Set{T}());
+	return terminatingCheck(source, top, Set{T}([source]));
 end
