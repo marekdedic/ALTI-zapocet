@@ -14,10 +14,10 @@ mutable struct Ideal{T<:AbstractAlgebra.RingElem}<:IdealType
 	generators::Set{T};
 	is_groebner::Bool;
 	is_reduced::Bool;
-	is_normed::Bool;
+	is_normalized::Bool;
 
-	function Ideal(base_ring::AbstractAlgebra.Ring, generators::Set{T}, is_groebner::Bool = false, is_reduced::Bool = false, is_normed::Bool = false)::Ideal where {T<:AbstractAlgebra.RingElem}
-		return new{T}(base_ring, Set(base_ring.(generators)), is_groebner, is_groebner && is_reduced, is_groebner && is_reduced && is_normed);
+	function Ideal(base_ring::AbstractAlgebra.Ring, generators::Set{T}, is_groebner::Bool = false, is_reduced::Bool = false, is_normalized::Bool = false)::Ideal where {T<:AbstractAlgebra.RingElem}
+		return new{T}(base_ring, Set(base_ring.(generators)), is_groebner, is_groebner && is_reduced, is_groebner && is_reduced && is_normalized);
 	end
 end
 
