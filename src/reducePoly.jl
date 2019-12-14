@@ -6,7 +6,7 @@ function reducePoly(source::T, top::T)::T where {T<:AbstractAlgebra.MPolyElem}
 	return divrem(source, top)[2];
 end
 
-function reducePoly(source::T, top::Set{T}, encountered::Set{T})::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
+function reducePoly(source::T, top::Set{T}, encountered::Set{T} = Set([source]))::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
 	for t in top
 		ret = reducePoly(source, t);
 		if !isnothing(ret) && ret ∉ collect(encountered)

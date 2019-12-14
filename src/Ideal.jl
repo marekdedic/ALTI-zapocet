@@ -1,9 +1,9 @@
 using AbstractAlgebra;
 
-import Base: show, zero;
+import Base: show, zero, in;
 import AbstractAlgebra: base_ring, gens;
 
-export Ideal, base_ring, gens, show;
+export Ideal, base_ring, gens, show, in;
 
 abstract type IdealType<:AbstractAlgebra.Ring end
 
@@ -43,4 +43,12 @@ end
 
 function show(io::IO, a::Ideal)
 	print(IOContext(io, :compat => true), "Ideal of ", base_ring(a), " with generators ", gens(a));
+end
+
+function in(item::T, ideal::Ideal{T})::Bool where {T<:AbstractAlgebra.MPolyElem}
+	if !ideal.is_groebner
+		error("Cannot determine if an item is a member of an Ideal with a non-Groebner basis.");
+	end
+	reduced = reducePoly(item, gens(ideal));
+	return iszero(reduced);
 end
