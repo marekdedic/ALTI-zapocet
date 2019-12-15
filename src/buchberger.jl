@@ -6,7 +6,7 @@ function buchberger(ideal::Ideal{T})::Ideal{T} where {T<:AbstractAlgebra.MPolyEl
 	if ideal.is_groebner
 		return ideal;
 	end
-	generators = gens(ideal);
+	generators = deepcopy(gens(ideal));
 	for (i, g1) in enumerate(collect(generators))
 		for g2 in collect(generators)[i + 1:end]
 			reduced = reducePolyStar(SPolynomial(g1, g2), generators);
