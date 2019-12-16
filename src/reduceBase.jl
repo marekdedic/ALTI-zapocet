@@ -13,14 +13,12 @@ function reduceBase(ideal::Ideal{T})::Ideal{T} where {T<:AbstractAlgebra.MPolyEl
 	for (i, g1) in enumerate(generators)
 		for g2 in generators[i + 1:end]
 			if divides(lm(g2), lm(g1))[1]
-				delete!(generators, g2);
-				return reduceBase(Ideal(base_ring(ideal), generators, true));
+				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g2, generators), true));
 			end
 			reduced = reducePoly(g2, g1);
 			if !iszero(reduced) && g2 != reduced
-				delete!(generators, g2);
 				push!(generators, reduced);
-				return reduceBase(Ideal(base_ring(ideal), generators, true));
+				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g2, generators), true));
 			end
 		end
 	end
