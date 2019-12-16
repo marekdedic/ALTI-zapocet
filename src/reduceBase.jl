@@ -17,9 +17,6 @@ function reduceBase(ideal::Ideal{T})::Ideal{T} where {T<:AbstractAlgebra.MPolyEl
 				return reduceBase(Ideal(base_ring(ideal), generators, true));
 			end
 			reduced = reducePoly(g2, g1);
-			println(g2);
-			println(reduced);
-			println();
 			if !iszero(reduced) && g2 != reduced
 				delete!(generators, g2);
 				push!(generators, reduced);

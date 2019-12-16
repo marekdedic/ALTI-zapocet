@@ -20,7 +20,6 @@ function reducePoly(source::T, top::Vector{T}, encountered::Vector{T} = [source]
 	for t in sort(top; lt = islessPoly)
 		ret = reducePoly(source, t);
 		if !isnothing(ret) && ret ∉ encountered
-			println("reducPoly: ", t);
 			return ret;
 		end
 	end
