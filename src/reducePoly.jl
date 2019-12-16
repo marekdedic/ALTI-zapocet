@@ -6,8 +6,18 @@ function reducePoly(source::T, top::T)::T where {T<:AbstractAlgebra.MPolyElem}
 	return divrem(source, top)[2];
 end
 
+function islessPoly(a::T, b::T)::Bool where {T<:AbstractAlgebra.MPolyElem}
+	if lm(a) < lm(b)
+		return true;
+	end
+	if lm(a) > lm(b)
+		return false;
+	end
+	return islessPoly(a - lt(a), b - lt(b));
+end
+
 function reducePoly(source::T, top::Vector{T}, encountered::Vector{T} = [source])::Union{T, Nothing} where {T<:AbstractAlgebra.MPolyElem}
-	for t in top
+	for t in sort(top; lt = islessPoly)
 		ret = reducePoly(source, t);
 		if !isnothing(ret) && ret ∉ encountered
 			println("reducPoly: ", t);
