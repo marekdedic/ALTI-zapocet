@@ -7,6 +7,12 @@ function reducePoly(source::T, top::T)::T where {T<:AbstractAlgebra.MPolyElem}
 end
 
 function islessPoly(a::T, b::T)::Bool where {T<:AbstractAlgebra.MPolyElem}
+	if total_degree(a) == 0
+		if total_degree(b) == 0
+			return lc(a) < lc(b)
+		end
+		return true;
+	end
 	if lm(a) < lm(b)
 		return true;
 	end
