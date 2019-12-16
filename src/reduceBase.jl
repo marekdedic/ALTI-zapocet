@@ -9,7 +9,7 @@ function reduceBase(ideal::Ideal{T})::Ideal{T} where {T<:AbstractAlgebra.MPolyEl
 	if !ideal.is_groebner
 		error("Trying to reduce non-Groebner basis ideal " * string(ideal));
 	end
-	generators = gens(ideal);
+	generators = deepcopy(gens(ideal));
 	for (i, g1) in enumerate(collect(generators))
 		for g2 in collect(generators)[i + 1:end]
 			if divides(lm(g2), lm(g1))[1]
