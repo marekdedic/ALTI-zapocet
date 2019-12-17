@@ -11,14 +11,14 @@ function reduceBase(ideal::Ideal{T})::Ideal{T} where {T<:AbstractAlgebra.MPolyEl
 	end
 	generators = deepcopy(gens(ideal));
 	for (i, g1) in enumerate(generators)
-		for g2 in generators[i + 1:end]
-			if divides(lm(g2), lm(g1))[1]
-				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g2, generators), true));
+		for g2 in sort(generators[i + 1:end], lt = islessPoly)
+			if divides(lm(g1), lm(g2))[1]
+				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g1, generators), true));
 			end
-			reduced = reducePoly(g2, g1);
-			if !iszero(reduced) && g2 != reduced
+			reduced = reducePoly(g1, g2);
+			if !iszero(reduced) && g1 != reduced
 				push!(generators, reduced);
-				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g2, generators), true));
+				return reduceBase(Ideal(base_ring(ideal), filter(g -> g ≠ g1, generators), true));
 			end
 		end
 	end
